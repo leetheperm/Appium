@@ -1,0 +1,43 @@
+# iOS environment
+import unittest
+from appium import webdriver
+
+# ut = unittest.TestCase()
+
+a = 25
+b = 55
+
+desired_caps = {}
+desired_caps['platformName'] = 'iOS'
+desired_caps['platformVersion'] = '13.2'
+desired_caps['automationName'] = 'xcuitest'
+desired_caps['deviceName'] = 'iPhone 8'
+desired_caps['app'] = ('/Users/bazu/Library/Developer/Xcode/DerivedData/TestApp-auompenesqusgjbqylfqtxnuetnd/Build/Products/Debug-iphonesimulator/TestApp.app')
+
+
+answer = a + b
+class TestSum(unittest.TestCase):
+
+	def testCalculator(self):
+		driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+		el1 = driver.find_element_by_accessibility_id("IntegerA")
+		el1.send_keys(a)
+		el2 = driver.find_element_by_accessibility_id("IntegerB")
+		el2.click()
+		el2.send_keys(b)
+		el3 = driver.find_element_by_accessibility_id("Compute Sum")
+		el3.click()
+		el4 = driver.find_element_by_accessibility_id("Answer")
+		app_answer = el4.get_attribute('wdValue')
+		self.assertEqual(str(answer),app_answer)
+		print('test passed')
+
+if __name__ == '__main__':
+    unittest.main()		
+
+Test = TestSum()
+
+Test.testCalculator()
+
+
+
